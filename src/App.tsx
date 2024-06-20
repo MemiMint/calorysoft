@@ -1,12 +1,17 @@
-import React, { FunctionComponent, useState } from "react";
-import { Box, Button } from "@mui/joy";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { StartUp } from "./components/StartUp";
+import { Init } from "./pages/Init";
 
 export const App: FunctionComponent = (): JSX.Element => {
-  const [count, setCount] = useState<number>(0);
+  const [test, setTest] = useState<boolean>(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTest(true);
+    }, 5000)
+  }, []);
 
   return (
-    <Box width="100vw" height="100vh" display="flex" alignItems="center" justifyContent="center">
-      <Button onClick={() => setCount((prevState) => prevState + 1)} >Count is {count}</Button>
-    </Box>
+    <Init />
   )
 }

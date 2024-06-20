@@ -1,11 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { App } from './App.tsx'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { App } from './App.tsx';
+import { ThemeProvider } from "@mui/joy/"
+import "./index.css";
+import { calorySoftTheme } from './styles/joy-theme.ts';
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={calorySoftTheme} >
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
 )
 
