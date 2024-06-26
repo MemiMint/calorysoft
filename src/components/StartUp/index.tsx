@@ -1,9 +1,18 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/joy";
 import logo from "../../assets/LogoCalorysoft.png"
-import { WithFade } from "../WithFade";
+import { WithFade } from "../animations/WithFade";
 
 export const StartUp: FunctionComponent = (): JSX.Element => {
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        setTimeout(() => {
+            navigate("/init");
+        }, 5000)
+    }, [])
+
     return (
         <WithFade>
             <Box

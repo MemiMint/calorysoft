@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { IProps } from "./props.types";
 import { Box } from "@mui/joy";
 import "./index.css";

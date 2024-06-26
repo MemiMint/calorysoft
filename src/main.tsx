@@ -8,8 +8,8 @@ import { calorySoftTheme } from './styles/joy-theme.ts';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ThemeProvider theme={calorySoftTheme} >
-      <App />
+    <ThemeProvider theme={calorySoftTheme}>
+      <App /> 
     </ThemeProvider>
   </React.StrictMode>,
 )

@@ -1,17 +1,10 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { StartUp } from "./components/StartUp";
-import { Init } from "./pages/Init";
+import { FunctionComponent } from "react";
+import { RouterProvider } from "react-router-dom";
+import { hashRouter } from "./routing/routes";
 
 export const App: FunctionComponent = (): JSX.Element => {
-  const [test, setTest] = useState<boolean>(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setTest(true);
-    }, 5000)
-  }, []);
 
   return (
-    <Init />
+    <RouterProvider router={hashRouter} /> 
   )
 }
