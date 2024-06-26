@@ -1,6 +1,7 @@
 import { createHashRouter, RouteObject } from "react-router-dom";
-import { Init, Registry, Login } from "../screens";
+import { Init, Registry, Login, Dashboard } from "../screens";
 import { StartUp } from "../components/StartUp";
+
 
 const routes: RouteObject[] = [
     {
@@ -21,7 +22,7 @@ const routes: RouteObject[] = [
     },
     {
         path: "/dashboard",
-        Component: null
+        Component: Dashboard
     }
 ]
 
