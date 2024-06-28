@@ -10,7 +10,7 @@ export const StartUp: FunctionComponent = (): JSX.Element => {
     useEffect(() => {
         setTimeout(() => {
             navigate("/init");
-        }, 5000)
+        }, 100)
     }, [])
 
     return (
