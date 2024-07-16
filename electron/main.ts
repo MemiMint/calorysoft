@@ -33,7 +33,6 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.mjs'),
       nodeIntegration: true
     },
-    titleBarStyle: "default",
     title: "Calorysoft",
     fullscreen: true
   })
