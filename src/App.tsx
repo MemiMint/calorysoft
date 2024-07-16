@@ -1,9 +1,31 @@
 import { FunctionComponent } from "react";
-import { RouterProvider } from "react-router-dom";
-import { hashRouter } from "./routing/routes";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import { routes } from "./routing/routes";
+import { DashboardLayout } from "./components/dashboard-layout";
 
 export const App: FunctionComponent = (): JSX.Element => {
   return (
-    <RouterProvider router={hashRouter} />
+    <HashRouter>
+      <Routes>
+        {
+          routes.map((route, index) => {
+            return (
+              <Route 
+                key={index}
+                index={route.index}
+                path={route.path}
+                element={
+                  route.renderWithLayout ? (
+                    <DashboardLayout>
+                      { route.element }
+                    </DashboardLayout>
+                  ) : route.element
+                }
+              />
+            )
+          })
+        }
+      </Routes>
+    </HashRouter>
   )
 }

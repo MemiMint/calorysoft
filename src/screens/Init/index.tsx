@@ -7,7 +7,7 @@ import { WithFadeIn } from "../../components/animations/WithFadeIn";
 
 export const Init: FunctionComponent = (): JSX.Element => {
     const navigate = useNavigate();
-    
+
     return (
         <WithFadeIn>
             <Box
@@ -25,7 +25,7 @@ export const Init: FunctionComponent = (): JSX.Element => {
                     Bienvenido a Calorysoft
                 </Typography>
                 <Typography level="body-lg">Antes de empezar nos gustaria que nos proporcionaras algunos datos</Typography>
-                <Button onClick={() => navigate("/registry")} size="lg" endDecorator={<ArrowRightIcon/>}>Proceder</Button>
+                <Button size="lg" onClick={() => navigate("/registry")} endDecorator={<ArrowRightIcon/>}>Proceder</Button>
             </Box>
         </WithFadeIn>
     )

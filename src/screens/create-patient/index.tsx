@@ -1,0 +1,158 @@
+import { FunctionComponent } from "react";
+import { Box, Typography, Button, Input, Divider, SvgIcon, Select, Option, Textarea } from "@mui/joy";
+import { FaAt } from "react-icons/fa6";
+
+const phonePrefixes: string[] = ["0412", "0414", "0416", "0424", "0426", "0212"];
+
+export const CreatePatient: FunctionComponent = (): JSX.Element => {
+    return (
+        <Box mt={2}>
+            <Typography level="h1" >
+                Agregar Paciente
+            </Typography>
+            <Typography level="title-md" >
+                Llena el formulario de abajo para registrar un usuario
+            </Typography>
+            <Box mt={4} >
+                <Box py={2} display="flex" alignItems="center" justifyContent="space-between">
+                    <Box>
+                        <Typography level="title-sm">
+                            Informacion Personal
+                        </Typography>
+                        <Typography level="body-sm">
+                            Ingrese la informacion del paciente
+                        </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={2} >
+                        <Button variant="soft"  >Cancelar</Button>
+                        <Button>Guardar</Button>
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Nombre del paciente
+                        </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={2} >
+                        <Input placeholder="nombre" />
+                        <Input placeholder="apellido" />
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Edad del paciente
+                        </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={2} >
+                        <Input type="number" placeholder="edad" />
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Peso del paciente
+                        </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={2} >
+                        <Input type="number" placeholder="peso" />
+                        <Typography level="title-sm">
+                            KG
+                        </Typography>
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Actividad Fisica
+                        </Typography>
+                    </Box>
+                    <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
+                        <Select sx={{ width: "100%" }} >
+                            <Option value={1.2} >Muy ligera</Option>
+                            <Option value={1.375}>Ligera</Option>
+                            <Option value={1.55}>Moderada</Option>
+                            <Option value={1.725}>Activa</Option>
+                            <Option value={1.9} >Muy activa</Option>
+                        </Select>
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Plan nutricional
+                        </Typography>
+                    </Box>
+                    <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
+                        <Select sx={{ width: "100%" }} >
+                            <Option value="Plan 1" >Plan 1</Option>
+                            <Option value="Plan 2" >Plan 2</Option>
+                            <Option value="Plan 3">Plan 3</Option>
+                        </Select>
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Correo electronico
+                        </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={2} >
+                        <Input
+                            startDecorator={(
+                                <SvgIcon size="sm" >
+                                    <FaAt />
+                                </SvgIcon>
+                            )}
+                            placeholder="john@doe.com" />
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Numero de telefono
+                        </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={2} >
+                        <Input
+                            startDecorator={(
+                                <>
+                                    <Select value="0212" sx={{ ml: -1.5 }}>
+                                        {phonePrefixes.map((prefix, index) => {
+                                            return (
+                                                <Option value={prefix} key={index}>
+                                                    {prefix}
+                                                </Option>
+                                            )
+                                        })}
+                                    </Select>
+                                </>
+                            )}
+                            placeholder="john@doe.com"
+                        />
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Notas adicionales
+                        </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={2} >
+                        <Textarea placeholder="" minRows={2} size="lg" />
+                    </Box>
+                </Box>
+                <Divider />
+            </Box>
+        </Box>
+    )
+}

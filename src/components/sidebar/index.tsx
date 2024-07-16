@@ -1,10 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import {  } from "@mui/icons-material";
 import { Box } from "@mui/joy";
-import logo from "../../assets/LogoCalorysoft.png";
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import GroupIcon from "@mui/icons-material/Group"
+import logo from "../../assets/logoCalorysoft3.png";
 import { GroupList } from './group-list';
+import { FaUsers, FaUserPlus, FaTableColumns, FaUserNurse, FaNotesMedical, FaBookMedical, FaFile, FaFileCirclePlus } from "react-icons/fa6";
 
 type ILink = {
     icon: React.ReactNode;
@@ -23,8 +21,8 @@ const groups: IGroupList[] = [
         items: [
             {
                 text: "Area de trabajo",
-                href: "",
-                icon: <GroupIcon />
+                href: "/dashboard",
+                icon: <FaTableColumns />
             },
         ]
     },
@@ -33,44 +31,84 @@ const groups: IGroupList[] = [
         items: [
             {
                 text: "Ver Pacientes",
-                href: "",
-                icon: <GroupIcon />
+                href: "/view-patients",
+                icon: <FaUsers />
             },
             {
                 text: "Agregar Paciente",
-                href: "/",
-                icon: <PersonAddIcon />
+                href: "/create-patient",
+                icon: <FaUserPlus />
             },
         ]
     },
     {
-        label: "Calculos",
+        label: "Asistentes",
         items: [
             {
-                text: "Ver Pacientes",
-                href: "",
-                icon: <GroupIcon />
+                text: "Ver Asistente",
+                href: "/view-asistants",
+                icon: <FaUserNurse />
             },
             {
-                text: "Agregar Paciente",
-                href: "/",
-                icon: <PersonAddIcon />
+                text: "Agregar Asistente",
+                href: "/create-asistant",
+                icon: <FaUserPlus />
+            }
+        ]
+    },
+    {
+        label: "Planes Nutricionales",
+        items: [
+            {
+                text: "Ver Planes Nutricionales",
+                href: "/view-nutritional-plans",
+                icon: <FaBookMedical />
             },
+            {
+                text: "Crear Plan Nutricional",
+                href: "/create-nutritional-plan",
+                icon: <FaNotesMedical />
+            }
+        ]
+    },
+    {
+        label: "Reportes",
+        items: [
+            {
+                text: "Ver Reportes",
+                href: "/reports",
+                icon: <FaFile />
+            },
+            {
+                text: "Crear Reporte",
+                href: "/create-report",
+                icon: <FaFileCirclePlus />
+            }
         ]
     }
 ]
 
 export const Sidebar: FunctionComponent = (): JSX.Element => {
     return (
-        <Box padding={2} display="flex" flexDirection="column" alignItems="center" height="100vh" width={250} bgcolor="#0A80FE" >
+        <Box
+            padding={2}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            height="100vh"
+            width={250}
+            bgcolor="#0A80FE"
+            position="sticky"
+            top={0}
+        >
             <img src={logo} />
             {
                 groups.map((group, index) => {
-                  return (
-                    <GroupList key={index} label={group.label} items={group.items} />
-                  )  
+                    return (
+                        <GroupList key={index} label={group.label} items={group.items} />
+                    )
                 })
             }
-       </Box>
+        </Box>
     )
 }
