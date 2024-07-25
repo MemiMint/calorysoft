@@ -1,10 +1,16 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { Box, Typography, SvgIcon, Divider, ButtonGroup, IconButton } from "@mui/joy";
 import { TotalCard } from "../../components/TotalCard";
 import { FaBookMedical, FaFile, FaUserNurse, FaUsers } from "react-icons/fa6";
 import { FaUserCircle } from "react-icons/fa";
 import PersonIcon from "@mui/icons-material/Person";
 import { UserTable } from "../../components/UserTable";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/reducers";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../store";
+import { me } from "../../services/auth/me";
 
 type TotalBoxes = {
     icon: React.ReactNode;
@@ -40,11 +46,32 @@ const boxes: TotalBoxes[] = [
 ]
 
 export const Dashboard: FunctionComponent = (): JSX.Element => {
+    const currentUserState = useSelector((state: RootState) => state.currentUser);
+    const dispatch = useDispatch();
+
+    const { currentUser } = bindActionCreators(actionCreators, dispatch);
+
+    const fetchCurrentUser = async (): Promise<void> => {
+        const response = await me();
+
+        currentUser({
+            firstname: response.firstname,
+            lastname: response.lastname,
+            username: response.username,
+            role: response.role,
+            uuid: response.uuid
+        });
+    }
+
+    useEffect(() => {
+        fetchCurrentUser();
+    }, [])
+
     return (
         <>
             <Box>
                 <Typography level="h1">
-                    Hola, Usuario!
+                    Hola, { currentUserState?.firstname } !
                 </Typography>
                 <Typography level="title-md" >
                     Bienvenido de vuelta

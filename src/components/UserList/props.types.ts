@@ -1,3 +1,5 @@
+import { Patient } from "../../types/patient";
+
 export type IProps = {
-    a?: Blob
+    patients: Patient[];
 };

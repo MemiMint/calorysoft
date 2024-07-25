@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ILoginState } from "./state";
+import { signIn } from "../../services/auth/signin";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../store";
+
 
 const INITIAL_STATE: Readonly<ILoginState> = {
     username: "",
     password: "",
-    isLoading: false
 }
 
+
 export const useLogin = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+    const { startLoading, finishLoading } = bindActionCreators(actionCreators, dispatch);
 
     const [state, setState] = useState<ILoginState>(INITIAL_STATE);
 
@@ -23,19 +31,21 @@ export const useLogin = () => {
     }
 
     const onClick = async (): Promise<void> => {
-        setState((prevState) => ({
-            ...prevState,
-            isLoading: true
-        }));
+        startLoading();
 
-        setTimeout(() => {
-            setState((prevState) => ({
-                ...prevState,
-                isLoading: false
-            }));
+        try {
+            const response = await signIn(state.username, state.password);
 
-            navigate("/dashboard");
-        }, 3000)
+            if (response.token) {
+                localStorage.setItem("token", response.token);
+                navigate("/dashboard");
+            }
+
+        } catch (error: any) {
+            console.error("Algo paso");
+        } finally {
+            finishLoading();
+        }
     }
 
     return {

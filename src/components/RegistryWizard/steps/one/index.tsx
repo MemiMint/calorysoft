@@ -11,7 +11,7 @@ export const StepOne: FunctionComponent<IProps> = (props): JSX.Element => {
             <Typography mt={2} level="title-md" fontSize={25} color="neutral">Escriba su nombre en el campo de texto de abajo</Typography>
             <FormControl sx={{ marginTop: 6 }}>
                 <Box display="flex" flexDirection="column" >
-                    <Input value={props.value} name="name" onChange={props.onChange} sx={{ height: 50, fontWeight: 600 }} placeholder="nombre" />
+                    <Input value={props.value} name="firstname" onChange={props.onChange} sx={{ height: 50, fontWeight: 600 }} placeholder="nombre" />
                     <Box mt={2} display="flex" alignItems="center" justifyContent="flex-end" >
                         <Button disabled={props.value.length === 0} onClick={() => props.onChangeIndex(2)} endDecorator={<ArrowRightIcon />} >Continuar</Button>
                     </Box>

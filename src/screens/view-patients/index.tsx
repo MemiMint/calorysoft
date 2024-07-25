@@ -2,8 +2,13 @@ import { FunctionComponent } from "react";
 import { Typography, Box, Input, SvgIcon, Select, Button, Stack } from "@mui/joy";
 import { FaUser, FaIdCard, FaMagnifyingGlass } from "react-icons/fa6";
 import { UserList } from "../../components/UserList";
+import { useViewPatients } from "./hook";
 
 export const ViewPatients: FunctionComponent = (): JSX.Element => {
+    const {
+        patients
+    } = useViewPatients();
+
     return (
         <>
             <Typography level="h1" >Ver Pacientes</Typography>
@@ -44,7 +49,7 @@ export const ViewPatients: FunctionComponent = (): JSX.Element => {
             </Box>
             <Box mt={4}>
                 <Stack spacing={4}>
-                    <UserList />
+                    <UserList patients={patients} />
                 </Stack>
             </Box>
         </>

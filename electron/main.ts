@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 //import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
@@ -31,7 +31,8 @@ function createWindow() {
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
-      nodeIntegration: true
+      nodeIntegration: true,
+      contextIsolation: false
     },
     titleBarStyle: "hidden",
     title: "Calorysoft",
@@ -68,5 +69,9 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+ipcMain.on("closeApp", () => app.quit());
+
+ipcMain.on("minimize", () => win?.minimize())
 
 app.whenReady().then(createWindow)

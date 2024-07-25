@@ -2,8 +2,9 @@ import { FunctionComponent } from "react";
 import { Typography, Box, SvgIcon, IconButton, Stack, Avatar, Chip, ButtonGroup, Tooltip } from "@mui/joy";
 import { FaUser, FaEye, FaPencil, FaTrash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { IProps } from "./props.types"
 
-export const UserItem: FunctionComponent = (): JSX.Element => {
+export const UserItem: FunctionComponent<IProps> = (props): JSX.Element => {
     const navigate = useNavigate();
 
     return (
@@ -13,7 +14,7 @@ export const UserItem: FunctionComponent = (): JSX.Element => {
                     <FaUser />
                 </Avatar>
                 <Typography level="title-sm">
-                    Alejandro Martinez
+                    { props.patient.firstname } { props.patient.lastname }
                 </Typography>
                 <Stack direction="row" spacing={2}>
                     <Chip>

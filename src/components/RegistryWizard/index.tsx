@@ -12,12 +12,14 @@ import { BackForward } from "./components/BackForward";
 import { ConfirmModal } from "../modals/confirm";
 import { ResponseModal } from "../modals/response";
 import { Loader } from "../loader";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/reducers";
 
 export const RegistryWizard: FunctionComponent = () => {
-    const navigate = useNavigate();
+    const isLoading = useSelector((state: RootState) => state.loading);
 
     const {
-      isLoading,
+      responseMessage,
       state, 
       index, 
       isModalOpen,
@@ -26,7 +28,8 @@ export const RegistryWizard: FunctionComponent = () => {
       onChangeIndex, 
       onChangeIndexBackAndForth,
       toggleModal,
-      onConfirm 
+      onConfirm,
+      onContinue
     } = useRegistryWizard();
     
     return (
@@ -39,9 +42,9 @@ export const RegistryWizard: FunctionComponent = () => {
         <Box flex={1} padding={20} position="relative">
             { isLoading && <Loader /> }
             { (state.password !== "") && <BackForward onChangeBack={() => onChangeIndexBackAndForth("back")} onChangeForward={() => onChangeIndexBackAndForth("forward")} /> }
-            { (index === 1) && <StepOne value={state.name} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} />  }
+            { (index === 1) && <StepOne value={state.firstname} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} />  }
             { (index === 2) && <StepTwo value={state.lastname} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} />  }
-            { (index === 3) && <StepThree value={state.did} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} /> }
+            { (index === 3) && <StepThree value={state.cid} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} /> }
             { (index === 4) && <StepFour value={state.username} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} /> }
             { (index === 5) && <StepFive value={state.password} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} onClick={toggleModal} /> }
         </Box>
@@ -53,7 +56,7 @@ export const RegistryWizard: FunctionComponent = () => {
             onCancel={toggleModal}
             onConfirm={onConfirm}
         />
-        <ResponseModal open={isResponseModalOpen} content="Su cuenta ha sido creada exitosamente" onClick={() => navigate("/login")} /> 
+        <ResponseModal open={isResponseModalOpen} content={responseMessage} onClick={onContinue} /> 
     </Box>
     )
 }

@@ -5,6 +5,9 @@ import logo from "../../assets/LogoCalorysoft.png";
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useLogin } from "./hook";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/reducers";
+
 
 export const Login: FunctionComponent = (): JSX.Element => {
     const {
@@ -12,6 +15,8 @@ export const Login: FunctionComponent = (): JSX.Element => {
         onChange,
         onClick
     } = useLogin();
+
+    const isLoading = useSelector((state: RootState) => state.loading);
 
     return (
         <WithFadeIn>
@@ -36,7 +41,7 @@ export const Login: FunctionComponent = (): JSX.Element => {
                         <Input name="password" value={state.password} onChange={onChange} startDecorator={<LockOutlinedIcon />} sx={{ width: 320 }} placeholder="Ingrese su contraseña" type="password" />
                     </FormControl>
                     <Button sx={{ width: 320 }} onClick={onClick}>
-                        { state.isLoading ? <CircularProgress /> : "Iniciar Sesion" }
+                        { isLoading ? <CircularProgress /> : "Iniciar Sesion" }
                     </Button>
                 </Box>
             </Box>

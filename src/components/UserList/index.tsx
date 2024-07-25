@@ -6,11 +6,15 @@ import { IProps } from "./props.types";
 export const UserList: FunctionComponent<IProps> = (props): JSX.Element => {
     return (
         <Stack direction="column" spacing={2}>
-            <UserItem />
-            <UserItem />
-            <UserItem />
-            <UserItem />
-            <UserItem />
+            {
+                props.patients.length && props.patients.map((patient) => {
+                    return (
+                        <UserItem 
+                            patient={patient}
+                        />
+                    )
+                })
+            }
         </Stack>
     )
 }

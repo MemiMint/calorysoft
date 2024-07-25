@@ -1,18 +1,27 @@
 import { FunctionComponent, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box } from "@mui/joy";
 import logo from "../../assets/LogoCalorysoft.png"
 import { WithFade } from "../animations/WithFade";
+import { doesAdminExists } from "../../services/admin-exists";
+import { useNavigate } from "react-router-dom";
 
 export const StartUp: FunctionComponent = (): JSX.Element => {
     const navigate = useNavigate();
-    
-    useEffect(() => {
-        setTimeout(() => {
-            navigate("/init");
-        }, 100)
-    }, [])
 
+    useEffect(() => {
+        setTimeout(async () => {
+            const exists: boolean = await doesAdminExists();
+
+            if (exists) {
+                navigate("/login");
+
+                return;
+            }
+
+            navigate("/init");
+        }, 3000)
+    }, [])
+    
     return (
         <WithFade>
             <Box

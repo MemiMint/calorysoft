@@ -1,40 +1,85 @@
 import React, { useState } from "react";
+import { signUp } from "../../services/auth/signup";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../store"
+import { useNavigate } from "react-router-dom";
 
 type IState = {
-    name: string;
+    firstname: string;
     lastname: string;
-    did: string;
+    cid: string;
     username: string;
     password: string;
 }
 
 export const useRegistryWizard = () => {
-    const [index, setIndex] = useState<number>(1);
-    const [isLoading, setIsloading] = useState<boolean>(false);
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch();
+    const { finishLoading, startLoading } = bindActionCreators(actionCreators, dispatch);
+
+    const [index, setIndex] = useState<number>(5);
 
     const [state, setState] = useState<IState>({
-        name: "",
-        lastname: "",
-        did: "",
-        username: "",
-        password: ""
+        firstname: "yeferson",
+        lastname: "sss",
+        cid: "sss",
+        username: "ss",
+        password: "sss"
     });
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isResponseModalOpen, setIsResponseModalOpen] = useState<boolean>(false);
+    const [responseMessage, setResponseMessage] = useState<string>("");
+    const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
-    const onConfirm = async () => {
+
+    const onConfirm = async (): Promise<void> => {
         setIsModalOpen(false);
-        setIsloading(true);
 
-        setTimeout(() => {
-            setIsloading(false);
+        startLoading();
+        
+        try {
+            const response = await signUp(
+                state.firstname,
+                state.lastname,
+                state.cid,
+                state.username,
+                state.password,
+                1
+            );
+
             setIsResponseModalOpen(true);
-        }, 5000);
+            setIsSuccess(response.success);
+
+            if (!response.success) {
+                setResponseMessage(response.message!);
+            }
+
+            setResponseMessage(response.message!);
+        } catch (error) {
+            setIsResponseModalOpen(true);
+            setResponseMessage("Ha ocurrido un error interno");
+        } finally {
+            finishLoading();
+        }
+    }
+
+    const onContinue = () => {
+        if (isSuccess) {
+            navigate("/login");
+        }
+
+        toggleResponseModal();
     }
 
     const toggleModal = () => {
         setIsModalOpen(!isModalOpen);
+    }
+
+    const toggleResponseModal = () => {
+        setIsResponseModalOpen(!isResponseModalOpen);
     }
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +89,7 @@ export const useRegistryWizard = () => {
         }));
     }
 
-    const onChangeIndexBackAndForth = (direction: "back" | "forward") => {    
+    const onChangeIndexBackAndForth = (direction: "back" | "forward") => {
         if (((direction === "back") && (index === 1)) || ((direction === "forward") && (index === 5))) {
             return;
         }
@@ -52,7 +97,7 @@ export const useRegistryWizard = () => {
         if (direction === "back") {
             setIndex((prevState) => prevState - 1);
         } else {
-            setIndex((prevState) => prevState + 1);  
+            setIndex((prevState) => prevState + 1);
         }
     }
 
@@ -61,15 +106,17 @@ export const useRegistryWizard = () => {
     }
 
     return {
-        isLoading,
         onConfirm,
         state,
         index,
+        responseMessage,
         isModalOpen,
         isResponseModalOpen,
         onChangeIndexBackAndForth,
         onChangeIndex,
         onChange,
-        toggleModal
+        toggleModal,
+        toggleResponseModal,
+        onContinue
     }
 }
