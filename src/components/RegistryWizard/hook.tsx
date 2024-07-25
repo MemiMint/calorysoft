@@ -19,14 +19,14 @@ export const useRegistryWizard = () => {
     const dispatch = useDispatch();
     const { finishLoading, startLoading } = bindActionCreators(actionCreators, dispatch);
 
-    const [index, setIndex] = useState<number>(5);
+    const [index, setIndex] = useState<number>(1);
 
     const [state, setState] = useState<IState>({
-        firstname: "yeferson",
-        lastname: "sss",
-        cid: "sss",
-        username: "ss",
-        password: "sss"
+        firstname: "",
+        lastname: "",
+        cid: "",
+        username: "",
+        password: ""
     });
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -82,6 +82,17 @@ export const useRegistryWizard = () => {
         setIsResponseModalOpen(!isResponseModalOpen);
     }
 
+    const onChangeCid = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const regex = /^[0-9\b]+$/;
+
+        if (event.target.value === "" || regex.test(event.target.value)) {
+            setState((prevState) => ({
+                ...prevState,
+                cid: event.target.value
+            }))
+        }
+    }
+
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
@@ -117,6 +128,7 @@ export const useRegistryWizard = () => {
         onChange,
         toggleModal,
         toggleResponseModal,
-        onContinue
+        onContinue,
+        onChangeCid
     }
 }

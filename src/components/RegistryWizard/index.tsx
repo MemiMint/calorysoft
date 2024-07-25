@@ -24,6 +24,7 @@ export const RegistryWizard: FunctionComponent = () => {
       index, 
       isModalOpen,
       isResponseModalOpen, 
+      onChangeCid,
       onChange, 
       onChangeIndex, 
       onChangeIndexBackAndForth,
@@ -44,7 +45,7 @@ export const RegistryWizard: FunctionComponent = () => {
             { (state.password !== "") && <BackForward onChangeBack={() => onChangeIndexBackAndForth("back")} onChangeForward={() => onChangeIndexBackAndForth("forward")} /> }
             { (index === 1) && <StepOne value={state.firstname} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} />  }
             { (index === 2) && <StepTwo value={state.lastname} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} />  }
-            { (index === 3) && <StepThree value={state.cid} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} /> }
+            { (index === 3) && <StepThree value={state.cid} currentIndex={index} onChange={onChangeCid} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} /> }
             { (index === 4) && <StepFour value={state.username} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} /> }
             { (index === 5) && <StepFive value={state.password} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} onClick={toggleModal} /> }
         </Box>
