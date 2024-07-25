@@ -13,7 +13,7 @@ export const StartUp: FunctionComponent = (): JSX.Element => {
             const exists: boolean = await doesAdminExists();
 
             if (exists) {
-                navigate("/init");
+                navigate("/login");
 
                 return;
             }
