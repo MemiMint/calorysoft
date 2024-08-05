@@ -2,8 +2,11 @@ import { FunctionComponent } from "react";
 import { Typography, Box, Input, SvgIcon, Button, Stack } from "@mui/joy";
 import { FaUser, FaMagnifyingGlass } from "react-icons/fa6";
 import { NutritionalPlanList } from "../../components/NutritionalPlanList";
+import { useViewNutritionalPlans } from "./hook";
 
 export const ViewNutritionalPlans: FunctionComponent = (): JSX.Element => {
+    const { nutritionalPlans } = useViewNutritionalPlans();
+
     return (
         <>
             <Typography level="h1">Ver Planes Nutricionales</Typography>
@@ -34,7 +37,7 @@ export const ViewNutritionalPlans: FunctionComponent = (): JSX.Element => {
             </Box>
             <Box mt={4}>
                 <Stack spacing={4}>
-                    <NutritionalPlanList />
+                    <NutritionalPlanList nutritionalPlans={nutritionalPlans} />
                 </Stack>
             </Box>
         </>

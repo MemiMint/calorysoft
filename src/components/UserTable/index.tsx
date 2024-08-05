@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {FC, useState } from "react";
 import Table from '@mui/joy/Table';
 import Typography from '@mui/joy/Typography';
 import Box from "@mui/joy/Box";
@@ -12,9 +12,8 @@ import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 
 type TData = {
-  name: string;
+  firstname: string;
   lastname: string;
-  age: number;
   phonenumber: string;
 }
 
@@ -24,38 +23,22 @@ type DisplayedRows = {
   count: number;
 }
 
-function createData(
-  name: string,
-  lastname: string,
-  age: number,
-  phonenumber: string
-): TData {
-  return { name, lastname, age, phonenumber };
-}
-const rows = [
-  createData("Usuario", "Prueba", 23, "(+58)1234567"),
-  createData("Usuario", "Prueba", 23, "(+58)1234567"),
-  createData("Usuario", "Prueba", 23, "(+58)1234567"),
-  createData("Usuario", "Prueba", 23, "(+58)1234567"),
-  createData("Usuario", "Prueba", 23, "(+58)1234567"),
-];
-
 
 const labelDisplayedRows = ({ from, to, count }: DisplayedRows): string => {
   return `${from}-${to} of ${count !== 1 ? count : `more than ${to}`}`;
 }
 
-export const UserTable = () => {
+export const UserTable: FC<{ rows: TData[] }> = (props) => {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(0);
 
   const getLabelDisplayedRowsTo = () => {
-    if (rows.length === -1) {
+    if (props.rows.length === -1) {
       return (page + 1) * rowsPerPage;
     }
     return rowsPerPage === -1
-      ? rows.length
-      : Math.min(rows.length, (page + 1) * rowsPerPage);
+      ? props.rows.length
+      : Math.min(props.rows.length, (page + 1) * rowsPerPage);
   };
 
   const onHandleChangePage = (newPage: number) => {
@@ -83,17 +66,19 @@ export const UserTable = () => {
             <tr>
               <th>Nombre</th>
               <th>Apellido</th>
-              <th>Edad</th>
               <th>Telefono</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => (
-              <tr key={row.name}>
-                <td>{row.name}</td>
+            {props.rows.map((row) => (
+              <tr key={row.firstname}>
+                <td>{row.firstname}</td>
                 <td>{row.lastname}</td>
-                <td>{row.age}</td>
                 <td>{row.phonenumber}</td>
+                <td>
+                  <Typography level="title-sm" color="primary" >Ver informacion</Typography>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -118,9 +103,9 @@ export const UserTable = () => {
                   </FormControl>
                   <Typography textAlign="center" sx={{ minWidth: 80 }}>
                     {labelDisplayedRows({
-                      from: rows.length === 0 ? 0 : page * rowsPerPage + 1,
+                      from: props.rows.length === 0 ? 0 : page * rowsPerPage + 1,
                       to: getLabelDisplayedRowsTo(),
-                      count: rows.length === -1 ? -1 : rows.length,
+                      count: props.rows.length === -1 ? -1 : props.rows.length,
                     })}
                   </Typography>
                   <Box sx={{ display: 'flex', gap: 1 }}>
@@ -139,8 +124,8 @@ export const UserTable = () => {
                       color="neutral"
                       variant="outlined"
                       disabled={
-                        rows.length !== -1
-                          ? page >= Math.ceil(rows.length / rowsPerPage) - 1
+                        props.rows.length !== -1
+                          ? page >= Math.ceil(props.rows.length / rowsPerPage) - 1
                           : false
                       }
                       onClick={() => onHandleChangePage(page + 1)}

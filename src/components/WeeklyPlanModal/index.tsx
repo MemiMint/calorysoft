@@ -20,6 +20,8 @@ import { useWeeklyPlanModal } from "./hook";
 
 export const WeeklyPlanModal: FunctionComponent<IProps> = (props): JSX.Element => {
 
+    console.log("SELECTED WEEK: ", props.selectedWeek);
+
     const {
         monday,
         tuesday,
@@ -35,7 +37,7 @@ export const WeeklyPlanModal: FunctionComponent<IProps> = (props): JSX.Element =
         setFriday,
         setSaturday,
         setSunday
-    } = useWeeklyPlanModal();
+    } = useWeeklyPlanModal(props.selectedWeek);
 
     return (
         <Modal open={props.open} >

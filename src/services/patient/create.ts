@@ -1,29 +1,36 @@
 import { getAxios } from "../../http/axios";
 import { patient } from "../../http/endpoints";
 import { Patient } from "../../types/patient";
+import { CreatePatientResponse } from "../../types/responses/create-patient-response";
 
 export const createPatient = async (
     firstname: string,
     lastname: string,
-    sex: string,
-    age: string,
-    weight: string,
-    physical_activity: string,
-    np_id: string,
+    age: number,
+    height: number,
     email: string,
-    notes: string
-): Promise<Patient> => {
-    const newPatient = await getAxios<{}, Patient>(patient.create, "POST", {
+    notes: string,
+    np_id: number,
+    phonenumber: string,
+    physical_activity: number,
+    sex: string,
+    weight: number
+): Promise<CreatePatientResponse> => {
+    const response = await getAxios<null, Patient>(patient.create, "POST", {
         firstname,
         lastname,
-        sex,
         age,
-        weight,
-        physical_activity: parseInt(physical_activity),
+        height,
         email,
         notes,
-        np_id: parseInt(np_id)
+        np_id,
+        phonenumber,
+        physical_activity,
+        sex,
+        weight
     });
 
-    return newPatient;
+    const data: CreatePatientResponse = await response.data;
+
+    return data;
 }

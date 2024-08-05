@@ -1,8 +1,11 @@
 import { FunctionComponent } from "react";
 import { Typography, Box, SvgIcon, IconButton, Avatar, ButtonGroup, Tooltip } from "@mui/joy";
 import { FaNotesMedical, FaEye, FaPencil, FaTrash } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
-export const NutritionalPlanItem: FunctionComponent = (): JSX.Element => {
+export const NutritionalPlanItem: FunctionComponent<{ id: number, title: string }> = (props): JSX.Element => {
+    const navigate = useNavigate();
+    
     return (
         <Box px={2} height={60} width="100%" bgcolor="white" boxShadow="md" display="flex" alignItems="center" justifyContent="space-between" borderRadius={4}>
             <Box display="flex" alignItems="center" gap={1} >
@@ -10,7 +13,7 @@ export const NutritionalPlanItem: FunctionComponent = (): JSX.Element => {
                     <FaNotesMedical />
                 </Avatar>
                 <Typography level="title-sm">
-                    Plan Nutricional Uno
+                    { props.title }
                 </Typography>
             </Box>
             <ButtonGroup spacing={0.5}>
@@ -21,7 +24,7 @@ export const NutritionalPlanItem: FunctionComponent = (): JSX.Element => {
                         </SvgIcon>
                     </IconButton>
                 </Tooltip>
-                <Tooltip title="Editar paciente" color="primary" size="sm" >
+                <Tooltip onClick={() => navigate(`/update-nutritional-plan/${props.id}`)} title="Editar paciente" color="primary" size="sm" >
                     <IconButton variant="solid" color="primary" size="sm" >
                         <SvgIcon size="sm" >
                             <FaPencil />

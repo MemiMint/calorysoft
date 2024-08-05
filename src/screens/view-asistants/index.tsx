@@ -1,12 +1,15 @@
 import { FunctionComponent } from "react";
 import { Typography, Box, Input, SvgIcon, Button, Stack } from "@mui/joy";
 import { FaUser, FaIdCard, FaMagnifyingGlass } from "react-icons/fa6";
-import { UserList } from "../../components/UserList";
+import { useViewAssistants } from "./hook";
+import { AssistantList } from "../../components/AssistantList";
 
 export const ViewAsistants: FunctionComponent = (): JSX.Element => {
+    const { assistants, onDelete } = useViewAssistants();
+
     return (
         <>
-            <Typography level="h1" >Ver Pacientes</Typography>
+            <Typography level="h1" >Ver Asistentes</Typography>
             <Box
                 display="flex"
                 alignItems="center"
@@ -43,7 +46,7 @@ export const ViewAsistants: FunctionComponent = (): JSX.Element => {
             </Box>
             <Box mt={4}>
                 <Stack spacing={4}>
-                    <UserList />
+                    <AssistantList onDelete={onDelete} assistants={assistants} />
                 </Stack>
             </Box>
         </>

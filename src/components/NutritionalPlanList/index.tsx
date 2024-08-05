@@ -1,14 +1,21 @@
 import { FunctionComponent } from "react";
 import Stack from "@mui/joy/Stack";
 import { NutritionalPlanItem } from "./NutritionalPlanItem";
+import { NutritionalPlan } from "../../types/nutritional-plan";
 
-export const NutritionalPlanList: FunctionComponent = (): JSX.Element => {
+export const NutritionalPlanList: FunctionComponent<{ nutritionalPlans: NutritionalPlan[] }> = (props): JSX.Element => {
     return (
         <Stack direction="column" spacing={2}>
-            <NutritionalPlanItem />
-            <NutritionalPlanItem />
-            <NutritionalPlanItem />
-            <NutritionalPlanItem />
+            {
+                props.nutritionalPlans.map((np) => {
+                    return (
+                        <NutritionalPlanItem 
+                            id={np.id}
+                            title={np.title}
+                        />
+                    )
+                })
+            }
         </Stack>
     )
 }

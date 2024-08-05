@@ -1,7 +1,9 @@
 import { RouteObject } from "react-router-dom";
-import { Init, Registry, Login, Dashboard, CreatePatient, ViewPatients, ViewAsistants, CreateAsistant, CreateNutriotionalPlan, CreateReport, ViewNutritionalPlans, ViewReports } from "../screens";
+import { Init, Registry, Login, Dashboard, CreatePatient, ViewPatients, ViewAsistants, CreateAsistant, CreateNutritionalPlan, CreateReport, ViewNutritionalPlans, ViewReports } from "../screens";
 import { StartUp } from "../components/StartUp";
 import { ViewPatient } from "../screens/view-patient";
+import { UpdatePatient } from "../screens/update-patient";
+import { UpdateNutritionalPlan } from "../screens/update-nutritional-plan";
 
 type LayoutRouter = {
     renderWithLayout?: boolean;
@@ -58,7 +60,7 @@ export const routes: IRoute[] = [
     },
     {
         path: "/create-nutritional-plan",
-        element: <CreateNutriotionalPlan />,
+        element: <CreateNutritionalPlan />,
         renderWithLayout: true,
     },
     {
@@ -72,8 +74,23 @@ export const routes: IRoute[] = [
         renderWithLayout: true,
     },
     {
+        path: "/update-patient/:id",
+        element: <UpdatePatient />,
+        renderWithLayout: true,
+    },
+    {
         path: "/patient/:id",
         element: <ViewPatient />,
+        renderWithLayout: true
+    }, 
+    {
+        path: "/nutritional-plan/:id",
+        element: <></>,
+        renderWithLayout: true
+    },
+    {
+        path: "/update-nutritional-plan/:id",
+        element: <UpdateNutritionalPlan />,
         renderWithLayout: true
     }
 ];

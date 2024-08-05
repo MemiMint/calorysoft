@@ -8,7 +8,8 @@ import { ViewNutritionalPlans } from "./view-nutritional-plans";
 import { ViewReports } from "./view-reports";
 import { CreatePatient } from "./create-patient";
 import { CreateAsistant } from "./create-asistant";
-import { CreateNutriotionalPlan } from "./create-nutritional-plan";
+import { CreateNutritionalPlan } from "./create-nutritional-plan";
+import { UpdateNutritionalPlan } from "./update-nutritional-plan";
 import { CreateReport } from "./create-report";
 
 export {
@@ -20,8 +21,9 @@ export {
     ViewAsistants,
     ViewNutritionalPlans,
     ViewReports,
-    CreateNutriotionalPlan,
+    CreateNutritionalPlan,
     CreateReport,
     CreatePatient,
-    CreateAsistant
+    CreateAsistant,
+    UpdateNutritionalPlan
 }

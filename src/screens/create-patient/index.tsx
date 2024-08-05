@@ -1,10 +1,15 @@
 import { FunctionComponent } from "react";
 import { Box, Typography, Button, Input, Divider, SvgIcon, Select, Option, Textarea } from "@mui/joy";
 import { FaAt } from "react-icons/fa6";
+import { useCreatePatient } from "./hook";
+import { ResponseAlert } from "../../components/alerts";
 
 const phonePrefixes: string[] = ["0412", "0414", "0416", "0424", "0426", "0212"];
 
 export const CreatePatient: FunctionComponent = (): JSX.Element => {
+    const { state, alertState, onChange, onChangeSelect, onClick, onCloseAlert } = useCreatePatient();
+
+
     return (
         <Box mt={2}>
             <Typography level="h1" >
@@ -24,8 +29,8 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Button variant="soft"  >Cancelar</Button>
-                        <Button>Guardar</Button>
+                        <Button variant="soft">Cancelar</Button>
+                        <Button onClick={onClick} >Guardar</Button>
                     </Box>
                 </Box>
                 <Divider />
@@ -36,8 +41,8 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Input placeholder="nombre" />
-                        <Input placeholder="apellido" />
+                        <Input name="firstname" value={state.firstname} onChange={onChange} placeholder="nombre" />
+                        <Input name="lastname" value={state.lastname} onChange={onChange} placeholder="apellido" />
                     </Box>
                 </Box>
                 <Divider />
@@ -48,7 +53,21 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Input type="number" placeholder="edad" />
+                        <Input name="age" value={state.age} onChange={onChange} type="number" placeholder="edad" />
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Altura del paciente
+                        </Typography>
+                    </Box>
+                    <Box display="flex" alignItems="center" gap={2} >
+                        <Input name="height" value={state.height} onChange={onChange} type="number" placeholder="altura" />
+                        <Typography level="title-sm">
+                            CM
+                        </Typography>
                     </Box>
                 </Box>
                 <Divider />
@@ -59,10 +78,24 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Input type="number" placeholder="peso" />
+                        <Input name="weight" value={state.weight} onChange={onChange} type="number" placeholder="peso" />
                         <Typography level="title-sm">
                             KG
                         </Typography>
+                    </Box>
+                </Box>
+                <Divider />
+                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
+                    <Box>
+                        <Typography level="title-sm">
+                            Sexo del paciente
+                        </Typography>
+                    </Box>
+                    <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
+                        <Select name="sex" value={state.sex} onChange={(event, value) => onChangeSelect(event!, "sex", value!)} sx={{ width: "100%" }} >
+                            <Option value={"M"} >Hombre</Option>
+                            <Option value={"F"}>Mujer</Option>
+                        </Select>
                     </Box>
                 </Box>
                 <Divider />
@@ -73,12 +106,12 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
-                        <Select sx={{ width: "100%" }} >
-                            <Option value={1.2} >Muy ligera</Option>
-                            <Option value={1.375}>Ligera</Option>
-                            <Option value={1.55}>Moderada</Option>
-                            <Option value={1.725}>Activa</Option>
-                            <Option value={1.9} >Muy activa</Option>
+                        <Select name="physical_activity" value={state.physical_activity} onChange={(event, value) => onChangeSelect(event!, "physical_activity", String(value!))} sx={{ width: "100%" }} >
+                            <Option value={"1.2"} >Muy ligera</Option>
+                            <Option value={"1.375"}>Ligera</Option>
+                            <Option value={"1.55"}>Moderada</Option>
+                            <Option value={"1.725"}>Activa</Option>
+                            <Option value={"1.9"} >Muy activa</Option>
                         </Select>
                     </Box>
                 </Box>
@@ -90,10 +123,10 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
-                        <Select sx={{ width: "100%" }} >
-                            <Option value="Plan 1" >Plan 1</Option>
-                            <Option value="Plan 2" >Plan 2</Option>
-                            <Option value="Plan 3">Plan 3</Option>
+                        <Select name="np_id" value={state.np_id} onChange={(event, value) => onChangeSelect(event!, "np_id", String(value!))} sx={{ width: "100%" }} >
+                            <Option value="1" >Plan 1</Option>
+                            <Option value="2" >Plan 2</Option>
+                            <Option value="3">Plan 3</Option>
                         </Select>
                     </Box>
                 </Box>
@@ -106,6 +139,8 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
                         <Input
+                            name="email"
+                            onChange={onChange}
                             startDecorator={(
                                 <SvgIcon size="sm" >
                                     <FaAt />
@@ -123,9 +158,12 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
                         <Input
+                            name="phonenumber"
+                            value={state.phonenumber}
+                            onChange={onChange}
                             startDecorator={(
                                 <>
-                                    <Select value="0212" sx={{ ml: -1.5 }}>
+                                    <Select name="phonePredix" value={state.phonePrefix} onChange={(event, value) => onChangeSelect(event!, "phonePrefix", value!)} sx={{ ml: -1.5 }}>
                                         {phonePrefixes.map((prefix, index) => {
                                             return (
                                                 <Option value={prefix} key={index}>
@@ -136,7 +174,7 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                                     </Select>
                                 </>
                             )}
-                            placeholder="john@doe.com"
+                            placeholder="999-999-999"
                         />
                     </Box>
                 </Box>
@@ -148,11 +186,19 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Textarea placeholder="" minRows={2} size="lg" />
+                        <Textarea name="notes" onChange={onChange} placeholder="" minRows={2} size="lg" />
                     </Box>
                 </Box>
                 <Divider />
             </Box>
+            { alertState && (
+                <ResponseAlert 
+                    open={alertState.open}
+                    title={alertState.title}
+                    type={alertState.type as any}
+                    onClose={onCloseAlert}
+                />
+            ) }
         </Box>
     )
 }

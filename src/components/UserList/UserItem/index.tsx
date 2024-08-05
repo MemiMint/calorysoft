@@ -24,21 +24,21 @@ export const UserItem: FunctionComponent<IProps> = (props): JSX.Element => {
             </Box>
             <ButtonGroup spacing={0.5}>
                 <Tooltip title="ver paciente" color="primary" size="sm">
-                    <IconButton onClick={() => navigate("/patient/888")} variant="solid" color="primary" size="sm" >
+                    <IconButton onClick={() => navigate(`/patient/${props.patient.id}`)} variant="solid" color="primary" size="sm" >
                         <SvgIcon size="sm" >
                             <FaEye />
                         </SvgIcon>
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Editar paciente" color="primary" size="sm" >
-                    <IconButton variant="solid" color="primary" size="sm" >
+                    <IconButton onClick={() => navigate(`/update-patient/${props.patient.id}`)} variant="solid" color="primary" size="sm" >
                         <SvgIcon size="sm" >
                             <FaPencil />
                         </SvgIcon>
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Eliminar paciente" color="danger" size="sm" >
-                    <IconButton variant="solid" color="danger" size="sm" >
+                    <IconButton onClick={() => props.onDelete(props.patient.id!)} variant="solid" color="danger" size="sm" >
                         <SvgIcon size="sm" >
                             <FaTrash />
                         </SvgIcon>

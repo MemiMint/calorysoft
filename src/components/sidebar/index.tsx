@@ -2,7 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { Box } from "@mui/joy";
 import logo from "../../assets/logoCalorysoft3.png";
 import { GroupList } from './group-list';
-import { FaUsers, FaUserPlus, FaTableColumns, FaUserNurse, FaNotesMedical, FaBookMedical, FaFile, FaFileCirclePlus } from "react-icons/fa6";
+import { FaUsers, FaUserPlus, FaTableColumns, FaUserNurse, FaNotesMedical, FaBookMedical, /*FaFile, FaFileCirclePlus*/ } from "react-icons/fa6";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/reducers';
 
 type ILink = {
     icon: React.ReactNode;
@@ -13,6 +15,7 @@ type ILink = {
 type IGroupList = {
     label: string;
     items: ILink[]
+    roles: number[];
 }
 
 const groups: IGroupList[] = [
@@ -24,7 +27,8 @@ const groups: IGroupList[] = [
                 href: "/dashboard",
                 icon: <FaTableColumns />
             },
-        ]
+        ],
+        roles: [0, 1]
     },
     {
         label: "Pacientes",
@@ -39,7 +43,8 @@ const groups: IGroupList[] = [
                 href: "/create-patient",
                 icon: <FaUserPlus />
             },
-        ]
+        ],
+        roles: [0, 1]
     },
     {
         label: "Asistentes",
@@ -54,7 +59,8 @@ const groups: IGroupList[] = [
                 href: "/create-asistant",
                 icon: <FaUserPlus />
             }
-        ]
+        ],
+        roles: [1]
     },
     {
         label: "Planes Nutricionales",
@@ -69,26 +75,29 @@ const groups: IGroupList[] = [
                 href: "/create-nutritional-plan",
                 icon: <FaNotesMedical />
             }
-        ]
+        ],
+        roles: [1]
     },
-    {
-        label: "Reportes",
-        items: [
-            {
-                text: "Ver Reportes",
-                href: "/reports",
-                icon: <FaFile />
-            },
-            {
-                text: "Crear Reporte",
-                href: "/create-report",
-                icon: <FaFileCirclePlus />
-            }
-        ]
-    }
+    // {
+    //     label: "Reportes",
+    //     items: [
+    //         {
+    //             text: "Ver Reportes",
+    //             href: "/reports",
+    //             icon: <FaFile />
+    //         },
+    //         {
+    //             text: "Crear Reporte",
+    //             href: "/create-report",
+    //             icon: <FaFileCirclePlus />
+    //         }
+    //     ]
+    // }
 ]
 
 export const Sidebar: FunctionComponent = (): JSX.Element => {
+    const currentUser = useSelector((state: RootState) => state.currentUser);
+
     return (
         <Box
             padding={2}
@@ -103,7 +112,7 @@ export const Sidebar: FunctionComponent = (): JSX.Element => {
         >
             <img src={logo} />
             {
-                groups.map((group, index) => {
+                currentUser && groups.filter((group) => group.roles.includes(currentUser.role)).map((group, index) => {
                     return (
                         <GroupList key={index} label={group.label} items={group.items} />
                     )

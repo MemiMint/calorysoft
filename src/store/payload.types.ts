@@ -5,3 +5,10 @@ export type CurrentUserPayload = {
     username: string;
     role: number;
 }
+
+export type AlertPayload = {
+    open: boolean;
+    title: string;
+    type: "success" | "warning" | "error" | "info";
+    subtitle?: string;
+}

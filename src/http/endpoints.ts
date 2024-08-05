@@ -5,6 +5,7 @@ type Auth = {
 }
 
 type Patient = {
+    patient: string;
     patients: string;
     create: string;
     update: string;
@@ -13,6 +14,22 @@ type Patient = {
 
 type Admin = {
     exists: string;
+}
+
+type Assistant = {
+    assistants: string;
+    create: string;
+    update: string;
+    asistant: string;
+    delete: string;
+}
+
+type NutritionalPlan = {
+    nutritionalPlans: string;
+    nutritionalPlan: string;
+    create: string;
+    delete: string;
+    update: string;
 }
 
 const auth: Auth = {
@@ -26,14 +43,33 @@ const admin: Admin = {
 }
 
 const patient: Patient = {
+    patient: "/patient",
     patients: "/patients",
     create: "/patients/create",
-    update: "/patients/update",
+    update: "/patient/",
     delete: "/patients/delete"
 }
+
+const assistant: Assistant = {
+    assistants: "/assistants",
+    asistant: "/asistant",
+    create: "/assistant/create",
+    update: "/assistant/",
+    delete: "/assistant/",
+}
+
+const nutritionalPlan: NutritionalPlan = {
+    nutritionalPlan: "/nutritional_plan",
+    nutritionalPlans: "/nutritional_plans",
+    create: "/nutritional_plan/create",
+    update: "/nutritional_plan/update",
+    delete: "/nutritional_plan/delete",
+};
 
 export {
     admin,
     auth,
-    patient
+    patient,
+    assistant,
+    nutritionalPlan
 }

@@ -1,11 +1,13 @@
+import { FC } from "react";
 import AspectRatio from '@mui/joy/AspectRatio';
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Typography from '@mui/joy/Typography';
 import { FaUser } from 'react-icons/fa6';
+import { Patient } from '../../types/patient';
 
-export const UserInfoCard = (): JSX.Element => {
+export const UserInfoCard: FC<Patient> = (props): JSX.Element => {
     const benedictCalc = (10 * 40) + (6.25 * 183) - (5 * 23) + 5 * 1.55;
     
     return (
@@ -42,17 +44,17 @@ export const UserInfoCard = (): JSX.Element => {
                 </AspectRatio>
             </CardOverflow>
             <Typography level="title-lg" sx={{ mt: 'calc(var(--icon-size) / 2)' }}>
-                Alejandro Hernandez
+                    { props.firstname } { props.lastname }
             </Typography>
             <CardContent sx={{ maxWidth: '40ch' }}>
                 <Typography level="title-sm" >
-                    edad: 23
+                    edad: { props.age }
                 </Typography>
                 <Typography level="title-sm" >
-                    peso: 40kg
+                    peso: {props.weight}kg
                 </Typography>
                 <Typography level="title-sm" >
-                    altura: 183CM
+                    altura: {props.height}CM
                 </Typography>
                 <Typography variant="solid" color="primary" mt={2} borderRadius={6}>
                     Calculo Calorico: { benedictCalc.toString() } 

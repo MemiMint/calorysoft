@@ -5,9 +5,8 @@ import { UserList } from "../../components/UserList";
 import { useViewPatients } from "./hook";
 
 export const ViewPatients: FunctionComponent = (): JSX.Element => {
-    const {
-        patients
-    } = useViewPatients();
+
+    const { patients, onDelete } = useViewPatients();
 
     return (
         <>
@@ -49,7 +48,7 @@ export const ViewPatients: FunctionComponent = (): JSX.Element => {
             </Box>
             <Box mt={4}>
                 <Stack spacing={4}>
-                    <UserList patients={patients} />
+                    <UserList onDelete={(id) => onDelete(id)} patients={patients} />
                 </Stack>
             </Box>
         </>

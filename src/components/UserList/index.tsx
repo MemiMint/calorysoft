@@ -9,7 +9,8 @@ export const UserList: FunctionComponent<IProps> = (props): JSX.Element => {
             {
                 props.patients.length && props.patients.map((patient) => {
                     return (
-                        <UserItem 
+                        <UserItem
+                            onDelete={props.onDelete}
                             patient={patient}
                         />
                     )

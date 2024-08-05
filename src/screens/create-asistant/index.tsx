@@ -1,10 +1,14 @@
 import { FunctionComponent } from "react";
-import { Box, Typography, Button, Input, Divider, SvgIcon, Select, Option, Textarea } from "@mui/joy";
+import { Box, Typography, Button, Input, Divider, SvgIcon, Select, Option } from "@mui/joy";
 import { FaAt } from "react-icons/fa6";
+import { useCreateAsistant } from "./hook";
+import { ResponseAlert } from "../../components/alerts";
 
 const phonePrefixes: string[] = ["0412", "0414", "0416", "0424", "0426", "0212"];
 
 export const CreateAsistant: FunctionComponent = (): JSX.Element => {
+    const { onChange, onChangeSelect, onClick, state, alertState, onClose } = useCreateAsistant();
+
     return (
         <Box mt={2}>
             <Typography level="h1" >
@@ -25,7 +29,7 @@ export const CreateAsistant: FunctionComponent = (): JSX.Element => {
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
                         <Button variant="soft"  >Cancelar</Button>
-                        <Button>Guardar</Button>
+                        <Button onClick={onClick}>Guardar</Button>
                     </Box>
                 </Box>
                 <Divider />
@@ -36,8 +40,8 @@ export const CreateAsistant: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Input placeholder="nombre" />
-                        <Input placeholder="apellido" />
+                        <Input name="firstname" value={state.firstname} onChange={onChange} placeholder="nombre" />
+                        <Input name="lastname" value={state.lastname} onChange={onChange} placeholder="apellido" />
                     </Box>
                 </Box>
                 <Divider />
@@ -48,7 +52,7 @@ export const CreateAsistant: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
-                        <Input placeholder="cedula" />
+                        <Input name="cid" value={state.cid} onChange={onChange} placeholder="cedula" />
                     </Box>
                 </Box>
                 <Divider />
@@ -59,7 +63,7 @@ export const CreateAsistant: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
-                        <Input placeholder="nombre de usuario" />
+                        <Input name="username" value={state.username} onChange={onChange} placeholder="nombre de usuario" />
                     </Box>
                 </Box>
                 <Divider />
@@ -70,7 +74,7 @@ export const CreateAsistant: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
-                        <Input type="password" placeholder="contraseña" />
+                        <Input name="password" value={state.password} onChange={onChange} type="password" placeholder="contraseña" />
                     </Box>
                 </Box>
                 <Divider />
@@ -82,6 +86,9 @@ export const CreateAsistant: FunctionComponent = (): JSX.Element => {
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
                         <Input
+                            name="email"
+                            value={state.email}
+                            onChange={onChange}
                             startDecorator={(
                                 <SvgIcon size="sm" >
                                     <FaAt />
@@ -99,9 +106,12 @@ export const CreateAsistant: FunctionComponent = (): JSX.Element => {
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
                         <Input
+                            name="phonenumber"
+                            value={state.phonenumber}
+                            onChange={onChange}
                             startDecorator={(
                                 <>
-                                    <Select value="0212" sx={{ ml: -1.5 }}>
+                                    <Select name="phonePrefix" value={state.phonePrefix} onChange={(event, value) => onChangeSelect(event!, value!)} sx={{ ml: -1.5 }}>
                                         {phonePrefixes.map((prefix, index) => {
                                             return (
                                                 <Option value={prefix} key={index}>
@@ -112,23 +122,18 @@ export const CreateAsistant: FunctionComponent = (): JSX.Element => {
                                     </Select>
                                 </>
                             )}
-                            placeholder="john@doe.com"
+                            placeholder="999-999-999"
                         />
                     </Box>
                 </Box>
                 <Divider />
-                <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
-                    <Box>
-                        <Typography level="title-sm">
-                            Notas adicionales
-                        </Typography>
-                    </Box>
-                    <Box display="flex" alignItems="center" gap={2} >
-                        <Textarea placeholder="" minRows={2} size="lg" />
-                    </Box>
-                </Box>
-                <Divider />
             </Box>
+            <ResponseAlert 
+                open={alertState.open}
+                title={alertState.title}
+                type={alertState.type as any}
+                onClose={onClose}
+            />
         </Box>
     )
 }

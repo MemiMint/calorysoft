@@ -1,55 +1,70 @@
 import { useState } from "react";
 import { Day } from "../../types/day";
+import { Week } from "../../types/week";
 
-export const useWeeklyPlanModal = () => {
-    const [monday, setMonday] = useState<Day>({
-        breakfast: "",
-        lunch: "",
-        dinner: "",
-        snack: ""
-    });
+const MONDAY: Day = {
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    snack: ""    
+}
 
-    const [tuesday, setTuesday] = useState<Day>({
-        breakfast: "",
-        lunch: "",
-        snack: "",
-        dinner: ""
-    });
+const TUESDAY: Day = {
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    snack: ""
+}
 
-    const [wednesday, setWednesday] = useState<Day>({
-        breakfast: "",
-        lunch: "",
-        snack: "",
-        dinner: ""        
-    });
+const WEDNESDAY: Day = {
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    snack: ""
+}
 
-    const [thursday, setThursday] = useState<Day>({
-        breakfast: "",
-        lunch: "",
-        snack: "",
-        dinner: ""
-    });
+const THURSDAY: Day = {
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    snack: ""
+}
 
-    const [friday, setFriday] = useState<Day>({
-        breakfast: "",
-        lunch: "",
-        snack: "",
-        dinner: ""
-    });
+const FRIDAY: Day = {
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    snack: ""
+}
 
-    const [saturday, setSaturday] = useState<Day>({
-        breakfast: "",
-        lunch: "",
-        snack: "",
-        dinner: ""
-    });
+const SATURDAY: Day = {
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    snack: ""
+}
 
-    const [sunday, setSunday] = useState<Day>({
-        breakfast: "",
-        lunch: "",
-        snack: "",
-        dinner: ""
-    });
+const SUNDAY: Day = {
+    breakfast: "",
+    lunch: "",
+    dinner: "",
+    snack: ""
+}
+
+export const useWeeklyPlanModal = (week?: Week | null) => {
+    const [monday, setMonday] = useState<Day>(week ? week.monday : MONDAY);
+
+    const [tuesday, setTuesday] = useState<Day>(week ? week.tuesday : TUESDAY);
+
+    const [wednesday, setWednesday] = useState<Day>(week ? week.wednesday : WEDNESDAY)
+
+    const [thursday, setThursday] = useState<Day>(week ? week.thursday : THURSDAY);
+
+    const [friday, setFriday] = useState<Day>(week ? week.friday : FRIDAY);
+
+    const [saturday, setSaturday] = useState<Day>(week ? week.saturday : SATURDAY);
+
+    const [sunday, setSunday] = useState<Day>(week ? week.sunday : SUNDAY);
 
     return {
         monday,

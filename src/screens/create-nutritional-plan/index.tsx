@@ -11,13 +11,22 @@ import {
 import { WeeklyPlanModal } from "../../components/WeeklyPlanModal";
 import { useCreateNutritionalPlan } from "./hook";
 import { WeekCard } from "../../components/WeeklyPlanModal/WeekCard";
+import { ResponseAlert } from "../../components/alerts";
 
-export const CreateNutriotionalPlan: FunctionComponent = (): JSX.Element => {
-    const { 
+export const CreateNutritionalPlan: FunctionComponent = (): JSX.Element => {
+    const {
         weeks,
-        openWeeklyPlanModal, 
-        onToggleOpenWeeklyPlanModal, 
-        onSave 
+        openWeeklyPlanModal,
+        onToggleOpenWeeklyPlanModal,
+        onOpenWeeklyPlanModalWithUpdate,
+        onSave,
+        state,
+        alertState,
+        onCloseAlert,
+        onClick,
+        onChange,
+        onDeleteWeek,
+        selectedWeek
     } = useCreateNutritionalPlan();
 
     return (
@@ -37,7 +46,7 @@ export const CreateNutriotionalPlan: FunctionComponent = (): JSX.Element => {
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
                         <Button variant="soft"  >Cancelar</Button>
-                        <Button>Guardar</Button>
+                        <Button onClick={onClick} >Guardar</Button>
                     </Box>
                 </Box>
                 <Divider />
@@ -48,7 +57,7 @@ export const CreateNutriotionalPlan: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Input placeholder="nombre" />
+                        <Input name="title" value={state.title} onChange={onChange} placeholder="titulo" />
                     </Box>
                 </Box>
                 <Divider />
@@ -59,7 +68,7 @@ export const CreateNutriotionalPlan: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Textarea sx={{ width: 320, height: 120, fontSize: 14 }} size="lg" placeholder="agrege una descripcion..." />
+                        <Textarea name="description" value={state.description} onChange={onChange} sx={{ width: 320, height: 120, fontSize: 14 }} size="lg" placeholder="agrege una descripcion..." />
                     </Box>
                 </Box>
                 <Divider />
@@ -67,15 +76,15 @@ export const CreateNutriotionalPlan: FunctionComponent = (): JSX.Element => {
                     <Typography level="title-md">
                         Plan Semanal
                     </Typography>
-                    <Stack my={2} direction="column" gap={2} >
+                    <Box display="flex" flexWrap="wrap" my={2} gap={2} >
                         {
                             weeks.map((week, index) => {
                                 return (
-                                    <WeekCard title={`Semana ${index + 1}`} />
+                                    <WeekCard onEdit={() => onOpenWeeklyPlanModalWithUpdate(index)} onDelete={() => onDeleteWeek(index)} title={`Semana ${index + 1}`} />
                                 )
                             })
                         }
-                    </Stack>
+                    </Box>
                     <Box marginTop={2}>
                         <Button
                             variant="outlined"
@@ -87,10 +96,17 @@ export const CreateNutriotionalPlan: FunctionComponent = (): JSX.Element => {
                     </Box>
                 </Box>
             </Box>
-            <WeeklyPlanModal 
+            <WeeklyPlanModal
+                selectedWeek={selectedWeek}
                 open={openWeeklyPlanModal}
                 onSave={(week) => onSave(week)}
                 onClose={onToggleOpenWeeklyPlanModal}
+            />
+            <ResponseAlert
+                open={alertState.open}
+                title={alertState.message}
+                onClose={onCloseAlert}
+                type={alertState.type as any}
             />
         </Box>
     )

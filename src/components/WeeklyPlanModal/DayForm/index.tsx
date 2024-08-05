@@ -8,6 +8,8 @@ type IProps = {
 }
 
 export const DayForm: FunctionComponent<IProps> = (props): JSX.Element => {
+    console.log(props.state.breakfast);
+    
     return (
         <Box width="100%" >
             <Box py={2} display="flex" alignItems="center" gap={4}>
