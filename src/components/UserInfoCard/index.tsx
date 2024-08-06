@@ -8,7 +8,9 @@ import { FaUser } from 'react-icons/fa6';
 import { Patient } from '../../types/patient';
 
 export const UserInfoCard: FC<Patient> = (props): JSX.Element => {
-    const benedictCalc = (10 * 40) + (6.25 * 183) - (5 * 23) + 5 * 1.55;
+    const benedictH = (10 * props.weight) + (6.25 * props.height) - (5 * props.age) + 5;
+    const benedictM = (10 * props.weight) + (6.25 * props.height) - (5 * props.age) - 161;
+
     
     return (
         <Card
@@ -57,7 +59,7 @@ export const UserInfoCard: FC<Patient> = (props): JSX.Element => {
                     altura: {props.height}CM
                 </Typography>
                 <Typography variant="solid" color="primary" mt={2} borderRadius={6}>
-                    Calculo Calorico: { benedictCalc.toString() } 
+                    Calculo Calorico: { props.sex === "M" ? (benedictH * props.physical_activity).toString() : (benedictM * props.physical_activity ).toString() } 
                 </Typography>
             </CardContent>
         </Card>

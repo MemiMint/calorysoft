@@ -8,7 +8,7 @@ import { useViewPatient } from "./hook";
 export const ViewPatient: FunctionComponent = (): JSX.Element => {
     const { id } = useParams();
 
-    const { patient } = useViewPatient(id!);
+    const { patient, np } = useViewPatient(id!);
 
     if (!patient) {
         return <p>loading...</p>
@@ -40,7 +40,7 @@ export const ViewPatient: FunctionComponent = (): JSX.Element => {
                             <FaNotesMedical color="white" size={40} />
                         </Box>
                         <Typography level="title-lg" sx={{ color: "white" }} >
-                            Plan Nutricional para diabeticos
+                            { np.title }
                         </Typography>
                     </Box>
                 </Box>

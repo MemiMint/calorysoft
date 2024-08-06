@@ -45,7 +45,7 @@ export const UserItem: FunctionComponent<IProps> = (props): JSX.Element => {
             </Box>
             <ButtonGroup spacing={0.5}>
                 <Tooltip title="ver paciente" color="primary" size="sm">
-                    <IconButton onClick={() => navigate(props.readOnly ? `/report/${props.patient.id}` : `/view-patient/${props.patient.id}`)} variant="solid" color="primary" size="sm" >
+                    <IconButton onClick={() => navigate(props.readOnly ? `/report/${props.patient.id}` : `/patient/${props.patient.id}`)} variant="solid" color="primary" size="sm" >
                         <SvgIcon size="sm" >
                             <FaEye />
                         </SvgIcon>
