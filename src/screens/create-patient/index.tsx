@@ -7,7 +7,7 @@ import { ResponseAlert } from "../../components/alerts";
 const phonePrefixes: string[] = ["0412", "0414", "0416", "0424", "0426", "0212"];
 
 export const CreatePatient: FunctionComponent = (): JSX.Element => {
-    const { state, alertState, onChange, onChangeSelect, onClick, onCloseAlert } = useCreatePatient();
+    const { state, nutritionalPlans, alertState, onChange, onChangeSelect, onClick, onCloseAlert } = useCreatePatient();
 
 
     return (
@@ -124,9 +124,15 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                     </Box>
                     <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
                         <Select name="np_id" value={state.np_id} onChange={(event, value) => onChangeSelect(event!, "np_id", String(value!))} sx={{ width: "100%" }} >
-                            <Option value="1" >Plan 1</Option>
-                            <Option value="2" >Plan 2</Option>
-                            <Option value="3">Plan 3</Option>
+                            {
+                                nutritionalPlans.map((np, index) => {
+                                    return (
+                                        <Option key={index} value={np.id.toString()} >
+                                            {np.title}
+                                        </Option>
+                                    )
+                                })
+                            }
                         </Select>
                     </Box>
                 </Box>
@@ -182,23 +188,23 @@ export const CreatePatient: FunctionComponent = (): JSX.Element => {
                 <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
                     <Box>
                         <Typography level="title-sm">
-                            Notas adicionales
+                            Reporte
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Textarea name="notes" onChange={onChange} placeholder="" minRows={2} size="lg" />
+                        <Textarea name="notes" value={state.notes} onChange={onChange} sx={{ width: 420, height: 140, fontSize: 14 }} size="lg" placeholder="agrege una descripcion..." />
                     </Box>
                 </Box>
                 <Divider />
             </Box>
-            { alertState && (
-                <ResponseAlert 
+            {alertState && (
+                <ResponseAlert
                     open={alertState.open}
                     title={alertState.title}
                     type={alertState.type as any}
                     onClose={onCloseAlert}
                 />
-            ) }
+            )}
         </Box>
     )
 }

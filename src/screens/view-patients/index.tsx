@@ -6,7 +6,7 @@ import { useViewPatients } from "./hook";
 
 export const ViewPatients: FunctionComponent = (): JSX.Element => {
 
-    const { patients, onDelete } = useViewPatients();
+    const { patients, name, onFetchPatientsSearch, setName,  onDelete } = useViewPatients();
 
     return (
         <>
@@ -24,6 +24,9 @@ export const ViewPatients: FunctionComponent = (): JSX.Element => {
                 <Box display="flex" alignItems="center" gap={1}>
                     <Input
                         size="sm"
+                        name="name"
+                        value={name}
+                        onChange={(event) => setName(event.target.value)}
                         placeholder="nombre"
                         startDecorator={
                             <SvgIcon size="sm" >
@@ -31,7 +34,7 @@ export const ViewPatients: FunctionComponent = (): JSX.Element => {
                             </SvgIcon>
                         }
                     />
-                    <Input
+                    {/* <Input
                         size="sm"
                         placeholder="cedula de identidad"
                         startDecorator={
@@ -40,15 +43,15 @@ export const ViewPatients: FunctionComponent = (): JSX.Element => {
                             </SvgIcon>
                         }
                     />
-                    <Select size="sm" placeholder="Plan nutricional" />
+                    <Select size="sm" placeholder="Plan nutricional" /> */}
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
-                    <Button size="sm" startDecorator={<SvgIcon><FaMagnifyingGlass /></SvgIcon>} variant="soft" >Buscar</Button>
+                    <Button onClick={() => onFetchPatientsSearch(name)} size="sm" startDecorator={<SvgIcon><FaMagnifyingGlass /></SvgIcon>} variant="soft" >Buscar</Button>
                 </Box>
             </Box>
             <Box mt={4}>
                 <Stack spacing={4}>
-                    <UserList onDelete={(id) => onDelete(id)} patients={patients} />
+                    { (patients.length === 0) ? <Typography>No existen registros</Typography> : <UserList onDelete={(id) => onDelete(id)} patients={patients} /> }
                 </Stack>
             </Box>
         </>

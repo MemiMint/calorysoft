@@ -5,8 +5,7 @@ import { NutritionalPlanList } from "../../components/NutritionalPlanList";
 import { useViewNutritionalPlans } from "./hook";
 
 export const ViewNutritionalPlans: FunctionComponent = (): JSX.Element => {
-    const { nutritionalPlans } = useViewNutritionalPlans();
-
+    const { nutritionalPlans, onFetchNPSearch, search, setSearch, onDelete } = useViewNutritionalPlans();
     return (
         <>
             <Typography level="h1">Ver Planes Nutricionales</Typography>
@@ -23,6 +22,9 @@ export const ViewNutritionalPlans: FunctionComponent = (): JSX.Element => {
                 <Box display="flex" alignItems="center" gap={1}>
                     <Input
                         size="sm"
+                        name="search"
+                        value={search}
+                        onChange={(event) => setSearch(event.target.value)}
                         placeholder="nombre"
                         startDecorator={
                             <SvgIcon size="sm" >
@@ -32,65 +34,14 @@ export const ViewNutritionalPlans: FunctionComponent = (): JSX.Element => {
                     />
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
-                    <Button size="sm" startDecorator={<SvgIcon><FaMagnifyingGlass /></SvgIcon>} variant="soft" >Buscar</Button>
+                    <Button onClick={() => onFetchNPSearch(search)} size="sm" startDecorator={<SvgIcon><FaMagnifyingGlass /></SvgIcon>} variant="soft" >Buscar</Button>
                 </Box>
             </Box>
             <Box mt={4}>
                 <Stack spacing={4}>
-                    <NutritionalPlanList nutritionalPlans={nutritionalPlans} />
+                    {(nutritionalPlans.length === 0) ? <Typography>No existen registros</Typography> : <NutritionalPlanList onDelete={onDelete} nutritionalPlans={nutritionalPlans} />}
                 </Stack>
             </Box>
         </>
     )
 }
-
-/*
-    nutritional plan {
-        weekPlans: [
-            {
-                monday: {
-                    breakfast: "arepas",
-                    lunch: "pasta",
-                    snack?: "galletas"
-                    dinner: "sandwich"
-                },
-                tuesday: {
-                    breakfast: "cereal",
-                    lunch: "pescado",
-                    snack?: "torta"
-                    dinner : "ensalada"
-                },
-                wednesday: {
-                    breakfast: "",
-                    lunch: "pescado",
-                    snack?: "torta"
-                    dinner : "ensalada"
-                },
-                thursday: {
-                    breakfast: "",
-                    lunch: "pescado",
-                    snack?: "torta",
-                    dinner : "ensalada"
-                },
-                friday: {
-                    breakfast: "",
-                    lunch: "pescado",
-                    snack?: "torta",
-                    dinner : "ensalada"
-                },
-                saturday: {
-                    breakfast: "",
-                    lunch: "pescado",
-                    snack?: "torta",
-                    dinner : "ensalada"
-                },
-                sunday: {
-                    breakfast: "",
-                    lunch: "pescado",
-                    snack?: "torta",
-                    dinner : "ensalada"
-                }
-            }
-        ]
-    }
-*/

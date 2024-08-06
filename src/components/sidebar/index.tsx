@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { Box } from "@mui/joy";
 import logo from "../../assets/logoCalorysoft3.png";
 import { GroupList } from './group-list';
-import { FaUsers, FaUserPlus, FaTableColumns, FaUserNurse, FaNotesMedical, FaBookMedical, /*FaFile, FaFileCirclePlus*/ } from "react-icons/fa6";
+import { FaUsers, FaUserPlus, FaTableColumns, FaUserNurse, FaNotesMedical, FaBookMedical, FaFile } from "react-icons/fa6";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/reducers';
 
@@ -78,21 +78,17 @@ const groups: IGroupList[] = [
         ],
         roles: [1]
     },
-    // {
-    //     label: "Reportes",
-    //     items: [
-    //         {
-    //             text: "Ver Reportes",
-    //             href: "/reports",
-    //             icon: <FaFile />
-    //         },
-    //         {
-    //             text: "Crear Reporte",
-    //             href: "/create-report",
-    //             icon: <FaFileCirclePlus />
-    //         }
-    //     ]
-    // }
+    {
+        label: "Reportes",
+        items: [
+            {
+                text: "Ver Reportes",
+                href: "/reports",
+                icon: <FaFile />
+            }
+        ],
+        roles: [1]
+    }
 ]
 
 export const Sidebar: FunctionComponent = (): JSX.Element => {

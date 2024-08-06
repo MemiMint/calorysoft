@@ -52,9 +52,9 @@ const patient: Patient = {
 
 const assistant: Assistant = {
     assistants: "/assistants",
-    asistant: "/asistant",
+    asistant: "/assistant",
     create: "/assistant/create",
-    update: "/assistant/",
+    update: "/assistant/update",
     delete: "/assistant/",
 }
 

@@ -4,6 +4,8 @@ import { StartUp } from "../components/StartUp";
 import { ViewPatient } from "../screens/view-patient";
 import { UpdatePatient } from "../screens/update-patient";
 import { UpdateNutritionalPlan } from "../screens/update-nutritional-plan";
+import { UpdateAssistant } from "../screens/update-assistant";
+import { ViewReport } from "../screens/view-report";
 
 type LayoutRouter = {
     renderWithLayout?: boolean;
@@ -74,6 +76,11 @@ export const routes: IRoute[] = [
         renderWithLayout: true,
     },
     {
+        path: "/report/:id",
+        element: <ViewReport />,
+        renderWithLayout: true
+    },
+    {
         path: "/update-patient/:id",
         element: <UpdatePatient />,
         renderWithLayout: true,
@@ -91,6 +98,11 @@ export const routes: IRoute[] = [
     {
         path: "/update-nutritional-plan/:id",
         element: <UpdateNutritionalPlan />,
+        renderWithLayout: true
+    },
+    {
+        path: "/update-assistant/:id",
+        element: <UpdateAssistant />,
         renderWithLayout: true
     }
 ];

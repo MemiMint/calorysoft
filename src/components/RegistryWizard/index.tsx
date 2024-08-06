@@ -25,6 +25,7 @@ export const RegistryWizard: FunctionComponent = () => {
       isModalOpen,
       isResponseModalOpen, 
       onChangeCid,
+      onChangePassword,
       onChange, 
       onChangeIndex, 
       onChangeIndexBackAndForth,
@@ -47,7 +48,7 @@ export const RegistryWizard: FunctionComponent = () => {
             { (index === 2) && <StepTwo value={state.lastname} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} />  }
             { (index === 3) && <StepThree value={state.cid} currentIndex={index} onChange={onChangeCid} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} /> }
             { (index === 4) && <StepFour value={state.username} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} /> }
-            { (index === 5) && <StepFive value={state.password} currentIndex={index} onChange={onChange} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} onClick={toggleModal} /> }
+            { (index === 5) && <StepFive value={state.password} currentIndex={index} onChange={onChangePassword} onChangeIndex={(newIndex) => onChangeIndex(newIndex)} onClick={toggleModal} /> }
         </Box>
         <StepSidebar currentIndex={index} />
         <ConfirmModal 

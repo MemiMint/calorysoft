@@ -9,7 +9,8 @@ export const AssistantList: FunctionComponent<{ assistants: User[], onDelete: (u
             {
                 props.assistants.length && props.assistants.map((assistant) => {
                     return (
-                        <UserItem 
+                        <UserItem
+                            id={assistant.uuid}
                             onDelete={props.onDelete}
                             assistant={assistant}
                         />

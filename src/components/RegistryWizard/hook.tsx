@@ -93,11 +93,22 @@ export const useRegistryWizard = () => {
         }
     }
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
         setState((prevState) => ({
             ...prevState,
-            [event.target.name]: event.target.value
-        }));
+            password: event.target.value
+        }));        
+    }
+
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const regex = /^[A-Za-z]*$/;
+
+        if (regex.test(event.target.value) && event.target.name !== "password") {
+            setState((prevState) => ({
+                ...prevState,
+                [event.target.name]: event.target.value
+            }));
+        }
     }
 
     const onChangeIndexBackAndForth = (direction: "back" | "forward") => {
@@ -129,6 +140,7 @@ export const useRegistryWizard = () => {
         toggleModal,
         toggleResponseModal,
         onContinue,
-        onChangeCid
+        onChangeCid,
+        onChangePassword
     }
 }

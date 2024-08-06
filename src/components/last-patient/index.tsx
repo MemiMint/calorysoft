@@ -31,14 +31,24 @@ export const LastPatientSkeleton: FC = (): JSX.Element => {
     )
 }
 
-export const LastPatient: FC<LastPatient> = (props) => {
+const NoPatient = () => {
+    return (
+        <Box boxShadow="md" p={2} mt={2} width={420} height={320} bgcolor="white" borderRadius={6} >
+            <Typography level="title-lg" >
+                No hay pacientes ingresados en el sistema
+            </Typography>
+        </Box>
+    )
+}
+
+export const LastPatient: FC<{ lastPatient: LastPatient | null }> = (props) => {
     const navigate = useNavigate();
 
-    return (
+    return props.lastPatient ? (
         <Box boxShadow="md" p={2} mt={2} width={420} height={320} bgcolor="white" borderRadius={6} >
             <Box width="100%" display="flex" alignItems="center" justifyContent="space-between" >
                 <Typography level="title-sm">Ultimo paciente agregado</Typography>
-                <Typography onClick={() => navigate(`/patient/${props.id}`)} sx={{ textDecoration: "underline" }} color="neutral" level="title-sm">Detalles {">"}</Typography>
+                <Typography onClick={() => navigate(`/patient/${props.lastPatient?.id}`)} sx={{ textDecoration: "underline" }} color="neutral" level="title-sm">Detalles {">"}</Typography>
             </Box>
             <Box py={2} gap={1} width="100%" height="100%" display="flex" alignItems="center" >
                 <Box bgcolor="#E3EFFB" display="flex" alignItems="center" justifyContent="center" width={220} height="100%" borderRadius={6} >
@@ -47,26 +57,26 @@ export const LastPatient: FC<LastPatient> = (props) => {
                 <Box display="flex" flexDirection="column" gap={2} px={4} width={220} height="100%" borderRadius={6} >
                     <Box>
                         <Typography level="body-xs">Nombre</Typography>
-                        <Typography mb={1} level="body-sm">{props.firstname}</Typography>
+                        <Typography mb={1} level="body-sm">{props.lastPatient.firstname}</Typography>
                         <Divider />
                     </Box>
                     <Box>
                         <Typography level="body-xs">Apellido</Typography>
-                        <Typography mb={1} level="body-sm">{props.lastname}</Typography>
+                        <Typography mb={1} level="body-sm">{props.lastPatient.lastname}</Typography>
                         <Divider />
                     </Box>
                     <Box>
                         <Typography level="body-xs">Edad</Typography>
-                        <Typography mb={1} level="body-sm">{props.age}</Typography>
+                        <Typography mb={1} level="body-sm">{props.lastPatient.age}</Typography>
                         <Divider />
                     </Box>
                     <Box>
                         <Typography level="body-xs">Numero de telefono</Typography>
-                        <Typography mb={1} level="body-sm">{props.phonenumber}</Typography>
+                        <Typography mb={1} level="body-sm">{props.lastPatient.phonenumber}</Typography>
                         <Divider />
                     </Box>
                 </Box>
             </Box>
         </Box>
-    )
+    ) : <NoPatient />
 }

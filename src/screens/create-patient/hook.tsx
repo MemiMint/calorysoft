@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Patient } from "../../types/patient";
 import { createPatient } from "../../services/patient/create";
+import { NutritionalPlan } from "../../types/nutritional-plan";
+import { getNutritionalPlans } from "../../services/nutritional_plans/get-nps";
 
 type IState = Patient & {
     phonePrefix: string;
@@ -22,6 +24,8 @@ export const useCreatePatient = () => {
         sex: "",
         weight: 0
     });
+
+    const [nutritionalPlans, setNutritionalPlans] = useState<NutritionalPlan[]>([]);
 
     const [alertState, setAlertState] = useState({
         open: false,
@@ -56,6 +60,12 @@ export const useCreatePatient = () => {
 
     const onCloseAlert = () => setAlertState((prevState) => ({ ...prevState, open: false  }));
 
+    const onFetchNutritionalPlans = async () => {
+        const response = await getNutritionalPlans();
+
+        setNutritionalPlans(response);
+    }
+
     const onClick = async (): Promise<void> => {
         try {
             const response = await createPatient(
@@ -87,8 +97,13 @@ export const useCreatePatient = () => {
         }
     }
 
+    useEffect(() => {
+        onFetchNutritionalPlans();
+    }, [])
+
     return {
         state,
+        nutritionalPlans,
         onChange,
         onChangeSelect,
         onClick,

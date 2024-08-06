@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import { Patient } from "../../types/patient";
 import { getPatients } from "../../services/patient/patients";
-import { UpdatePatientResponse } from "../../types/responses/update-patient-response";
-import { deletePatient } from "../../services/patient/delete";
 import { searchPatients } from "../../services/patient/search";
 
-export const useViewPatients = () => {
-    const [name, setName] = useState<string>("");
+export const useViewReports= () => {
     const [patients, setPatients] = useState<Patient[]>([]);
+    const [name, setName] = useState<string>("");
 
     const onFetchPatients = async (): Promise<void> => {
         const response = await getPatients();
@@ -27,24 +25,6 @@ export const useViewPatients = () => {
         setPatients(response);
     }
 
-    const [alertState, setAlertState] = useState({
-        open: false,
-        title: "",
-        type: "",
-    });
-
-    const onDelete = async (id: number) => {
-        try {
-            const response: UpdatePatientResponse = await deletePatient(id);
-            
-            alert(response.message);
-        } catch (error) {          
-            alert("Hubo un error interno");
-        } finally {
-            onFetchPatients();
-        }
-    }
-
     useEffect(() => {
         onFetchPatients();
     }, []);
@@ -52,8 +32,7 @@ export const useViewPatients = () => {
     return {
         name,
         setName,
-        patients,
         onFetchPatientsSearch,
-        onDelete
+        patients,
     }
 }

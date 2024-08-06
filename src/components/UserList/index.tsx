@@ -10,6 +10,7 @@ export const UserList: FunctionComponent<IProps> = (props): JSX.Element => {
                 props.patients.length && props.patients.map((patient) => {
                     return (
                         <UserItem
+                            readOnly={props.readOnly}
                             onDelete={props.onDelete}
                             patient={patient}
                         />

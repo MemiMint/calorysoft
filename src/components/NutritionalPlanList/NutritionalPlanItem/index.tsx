@@ -3,7 +3,7 @@ import { Typography, Box, SvgIcon, IconButton, Avatar, ButtonGroup, Tooltip } fr
 import { FaNotesMedical, FaEye, FaPencil, FaTrash } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-export const NutritionalPlanItem: FunctionComponent<{ id: number, title: string }> = (props): JSX.Element => {
+export const NutritionalPlanItem: FunctionComponent<{ id: number, title: string, onDelete(id: number): void }> = (props): JSX.Element => {
     const navigate = useNavigate();
     
     return (
@@ -17,22 +17,15 @@ export const NutritionalPlanItem: FunctionComponent<{ id: number, title: string 
                 </Typography>
             </Box>
             <ButtonGroup spacing={0.5}>
-                <Tooltip title="ver paciente" color="primary" size="sm">
-                    <IconButton variant="solid" color="primary" size="sm" >
-                        <SvgIcon size="sm" >
-                            <FaEye />
-                        </SvgIcon>
-                    </IconButton>
-                </Tooltip>
-                <Tooltip onClick={() => navigate(`/update-nutritional-plan/${props.id}`)} title="Editar paciente" color="primary" size="sm" >
-                    <IconButton variant="solid" color="primary" size="sm" >
+                <Tooltip  title="Editar Plan Nutricional" color="primary" size="sm" >
+                    <IconButton onClick={() => navigate(`/update-nutritional-plan/${props.id}`)} variant="solid" color="primary" size="sm" >
                         <SvgIcon size="sm" >
                             <FaPencil />
                         </SvgIcon>
                     </IconButton>
                 </Tooltip>
-                <Tooltip title="Eliminar paciente" color="danger" size="sm" >
-                    <IconButton variant="solid" color="danger" size="sm" >
+                <Tooltip title="Eliminar Plan Nutricional" color="danger" size="sm" >
+                    <IconButton onClick={() => props.onDelete(props.id)} variant="solid" color="danger" size="sm" >
                         <SvgIcon size="sm" >
                             <FaTrash />
                         </SvgIcon>

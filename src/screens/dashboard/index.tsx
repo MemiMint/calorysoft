@@ -45,11 +45,13 @@ export const Dashboard: FunctionComponent = (): JSX.Element => {
         },
         {
             icon: <FaFile />,
+            href: "/reports",
             label: "Total de reportes",
-            total: 0
+            total: state.totalPatients
         }
     ]
 
+    const loadingState = useSelector((state: RootState) => state.loading);
     const currentUserState = useSelector((state: RootState) => state.currentUser);
     const dispatch = useDispatch();
 
@@ -93,13 +95,9 @@ export const Dashboard: FunctionComponent = (): JSX.Element => {
                 </Box>
                 <Box display="flex" alignItems="center" gap={2} >
                     {
-                        state.lastPatient ? (
+                        !loadingState ? (
                             <LastPatient 
-                                id={state.lastPatient.id!}
-                                firstname={state.lastPatient.firstname}
-                                lastname={state.lastPatient.lastname}
-                                age={state.lastPatient.age}
-                                phonenumber={state.lastPatient.phonenumber}
+                                lastPatient={state.lastPatient as any}
                             />
                         ) : (
                             <LastPatientSkeleton />

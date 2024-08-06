@@ -5,7 +5,7 @@ import { useViewAssistants } from "./hook";
 import { AssistantList } from "../../components/AssistantList";
 
 export const ViewAsistants: FunctionComponent = (): JSX.Element => {
-    const { assistants, onDelete } = useViewAssistants();
+    const { assistants, onFetchAssistantsSearch, search, setSearch, onDelete } = useViewAssistants();
 
     return (
         <>
@@ -23,15 +23,9 @@ export const ViewAsistants: FunctionComponent = (): JSX.Element => {
                 <Box display="flex" alignItems="center" gap={1}>
                     <Input
                         size="sm"
-                        placeholder="nombre"
-                        startDecorator={
-                            <SvgIcon size="sm" >
-                                <FaUser />
-                            </SvgIcon>
-                        }
-                    />
-                    <Input
-                        size="sm"
+                        name="cid"
+                        value={search}
+                        onChange={(event) => setSearch(event.target.value)}
                         placeholder="cedula de identidad"
                         startDecorator={
                             <SvgIcon size="sm" >
@@ -41,12 +35,12 @@ export const ViewAsistants: FunctionComponent = (): JSX.Element => {
                     />
                 </Box>
                 <Box display="flex" alignItems="center" gap={1}>
-                    <Button size="sm" startDecorator={<SvgIcon><FaMagnifyingGlass /></SvgIcon>} variant="soft" >Buscar</Button>
+                    <Button onClick={() => onFetchAssistantsSearch(search)} size="sm" startDecorator={<SvgIcon><FaMagnifyingGlass /></SvgIcon>} variant="soft" >Buscar</Button>
                 </Box>
             </Box>
             <Box mt={4}>
                 <Stack spacing={4}>
-                    <AssistantList onDelete={onDelete} assistants={assistants} />
+                    { (assistants.length === 0) ? <Typography>No existen registros</Typography> : <AssistantList onDelete={onDelete} assistants={assistants} /> }
                 </Stack>
             </Box>
         </>

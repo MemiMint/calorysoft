@@ -9,7 +9,7 @@ const phonePrefixes: string[] = ["0412", "0414", "0416", "0424", "0426", "0212"]
 
 export const UpdatePatient: FunctionComponent = (): JSX.Element => {
     const { id } = useParams()
-    const { state, alertState, onChange, onChangeSelect, onClick, onCloseAlert } = useCreatePatient(id!);
+    const { state, nutritionalPlans, alertState, onChange, onChangeSelect, onChangeSelectNumber, onClick, onCloseAlert } = useCreatePatient(id!);
 
     console.log(id);
 
@@ -109,7 +109,7 @@ export const UpdatePatient: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
-                        <Select name="physical_activity" value={state.physical_activity} onChange={(event, value) => onChangeSelect(event!, "physical_activity", String(value!))} sx={{ width: "100%" }} >
+                        <Select name="physical_activity" value={state.physical_activity} onChange={(event, value) => onChangeSelectNumber(event!, "physical_activity", value!)} sx={{ width: "100%" }} >
                             <Option value={1.2} >Muy ligera</Option>
                             <Option value={1.375}>Ligera</Option>
                             <Option value={1.55}>Moderada</Option>
@@ -126,10 +126,16 @@ export const UpdatePatient: FunctionComponent = (): JSX.Element => {
                         </Typography>
                     </Box>
                     <Box sx={{ width: 200 }} display="flex" alignItems="center" gap={2} >
-                        <Select name="np_id" value={state.np_id} onChange={(event, value) => onChangeSelect(event!, "np_id", String(value!))} sx={{ width: "100%" }} >
-                            <Option value="1" >Plan 1</Option>
-                            <Option value="2" >Plan 2</Option>
-                            <Option value="3">Plan 3</Option>
+                        <Select name="np_id" value={state.np_id} onChange={(event, value) => onChangeSelectNumber(event!, "np_id", value!)} sx={{ width: "100%" }} >
+                            {
+                                nutritionalPlans.map((np) => {
+                                    return (
+                                        <Option value={np.id} >
+                                            {np.title}
+                                        </Option>
+                                    )
+                                })
+                            }
                         </Select>
                     </Box>
                 </Box>
@@ -143,6 +149,7 @@ export const UpdatePatient: FunctionComponent = (): JSX.Element => {
                     <Box display="flex" alignItems="center" gap={2} >
                         <Input
                             name="email"
+                            value={state.email}
                             onChange={onChange}
                             startDecorator={(
                                 <SvgIcon size="sm" >
@@ -185,23 +192,23 @@ export const UpdatePatient: FunctionComponent = (): JSX.Element => {
                 <Box mt={4} py={2} display="flex" alignItems="center" gap={4}>
                     <Box>
                         <Typography level="title-sm">
-                            Notas adicionales
+                            Reporte
                         </Typography>
                     </Box>
                     <Box display="flex" alignItems="center" gap={2} >
-                        <Textarea name="notes" value={state.notes} onChange={onChange} placeholder="" minRows={2} size="lg" />
+                        <Textarea name="notes" value={state.notes} onChange={onChange} sx={{ width: 420, height: 140, fontSize: 14 }} size="lg" placeholder="agrege una descripcion..." />
                     </Box>
                 </Box>
                 <Divider />
             </Box>
-            { alertState && (
-                <ResponseAlert 
+            {alertState && (
+                <ResponseAlert
                     open={alertState.open}
                     title={alertState.title}
                     type={alertState.type as any}
                     onClose={onCloseAlert}
                 />
-            ) }
+            )}
         </Box>
     )
 }

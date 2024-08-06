@@ -4,6 +4,11 @@ import { getDashboard } from "../../services/dashboard";
 import { getPatients } from "../../services/patient/patients";
 import { getAssistants } from "../../services/assistants/get-assistants";
 import { User } from "../../types/user";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/reducers";
+import { useDispatch } from "react-redux";
+import { actionCreators } from "../../store";
+import { bindActionCreators } from "redux";
 
 type IState = {
     totalPatients: number;
@@ -13,6 +18,10 @@ type IState = {
 }
 
 export const useDashboard = () => {
+    const dispatch = useDispatch();
+
+    const { startLoading, finishLoading } = bindActionCreators(actionCreators, dispatch);
+
     const [state, setState] = useState<IState>({
         lastPatient: null,
         totalAssistants: 0,
@@ -30,21 +39,29 @@ export const useDashboard = () => {
     }
 
     const onFetchDashboard = async () => {
-        const dashboard = await getDashboard();
-        const patients = await getPatients();
-        const assistants = await getAssistants();
+        startLoading();
 
-        setPatients(patients);
-        setAssistants(assistants);
-
-        
-
-        setState((prevState) => ({
-            lastPatient: dashboard.lastPatient,
-            totalAssistants: dashboard.totalAssistantRecordCount,
-            totalNutritionalPlans: dashboard.totalNPRecordCount,
-            totalPatients: dashboard.totalPatientRecordCount
-        }));
+        try {
+            const dashboard = await getDashboard();
+            const patients = await getPatients();
+            const assistants = await getAssistants();
+    
+            setPatients(patients);
+            setAssistants(assistants);
+    
+            
+    
+            setState((prevState) => ({
+                lastPatient: dashboard.lastPatient,
+                totalAssistants: dashboard.totalAssistantRecordCount,
+                totalNutritionalPlans: dashboard.totalNPRecordCount,
+                totalPatients: dashboard.totalPatientRecordCount
+            }));
+        } catch (error) {
+            console.error(error);
+        } finally {
+            finishLoading();
+        }
     }
 
     useEffect(() => {
